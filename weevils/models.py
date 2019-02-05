@@ -1,25 +1,47 @@
 
 
-class GitHostConnection:
+class ApiModel:
+
+    properties = ()
 
     def __init__(self, api_data):
-        self.host = api_data['host']
-        self.username = api_data['username']
+        self._api_data = api_data.copy()
+        for prop in self.properties:
+            setattr(self, prop, self._api_data[prop])
+
+    def as_dict(self):
+        return {prop: getattr(self, prop) for prop in self.properties }
 
 
-class WeevilUser:
+class GitHostConnection(ApiModel):
+    properties = ('host', 'username')
+
+
+class WeevilUser(ApiModel):
+    properties = ('uuid')
 
     def __init__(self, api_data):
-        self.id = api_data['uuid']
+        super().__init__(api_data)
         self.connections = [GitHostConnection(conn) for conn in api_data['connected_to']]
 
+    def as_dict(self):
+        data = super().as_dict()
+        data['connections'] = [conn.as_dict() for conn in self.connections]
+        return data
 
-class Repository:
+
+class Repository(ApiModel):
+    properties = ('uuid', 'repo_host', 'name', 'private', 'checked')
 
     def __init__(self, api_data):
-        self.repository_id = api_data['uuid']
-        self.host = api_data['repo_host']
+        super().__init__(api_data)
         self.owner = api_data['owner']['username']
-        self.name = api_data['name']
-        self.private = api_data['private']
-        self.checked = api_data['checked']
+
+    def as_dict(self):
+        data = super().as_dict()
+        data['owner'] = self.owner
+        return data
+
+
+class Check(ApiModel):
+    properties = ('uuid', 'number', 'status', 'previous_number', 'previous_id', 'next_number')

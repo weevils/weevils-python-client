@@ -1,6 +1,6 @@
 from urllib.parse import urljoin, urlencode
 from requests_oauthlib import OAuth2Session
-from .models import WeevilUser, Repository
+from .models import WeevilUser, Repository, Check
 
 
 class NotLoggedIn(Exception):
@@ -90,12 +90,23 @@ class WeevilsClient:
 
     @requires_login
     def repository_from_id(self, repository_id):
-        return Repository(self._auth_get('api/repos/%s' % repository_id))
+        return Repository(self._auth_get('api/repo/%s' % repository_id))
 
     @requires_login
     def set_checking(self, repository_id, checking):
-        response = self._auth_post('api/repos/%s/checked' % repository_id, enabled=checking)
+        response = self._auth_post('api/repo/%s/checked' % repository_id, enabled=checking)
         return response['enabled']
+
+    @requires_login
+    def check_now(self, repository_id):
+        return self._auth_post('api/repo/%s/check' % repository_id)
+
+    @requires_login
+    def check_list(self, repository_id, count=5):
+        response = self._auth_get('api/repo/%s/checks?count=%s' % (repository_id, count))
+        return [
+            Check(check_data) for check_data in response['checks']
+        ]
 
     def trigger_sync(self):
         pass
