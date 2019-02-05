@@ -53,7 +53,8 @@ class WeevilsClient:
         token = self._session.refresh_token(
             token_url,
             refresh_token=refresh_token,
-            **{"client_id": self.client_id, "client_secret": client_secret}
+            client_id=self.client_id,
+            client_secret=client_secret
         )
         return token
 
