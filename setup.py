@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     install_requires=['requests==2.21.0', 'requests-oauthlib==1.2.0'],
     extras_require={
-        'for_tests': ['nose==1.3.7'],
+        'for_tests': ['nose==1.3.7', 'betamax==0.8.1'],
     },
     license='MIT',
     classifiers=[

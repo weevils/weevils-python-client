@@ -22,11 +22,13 @@ class WeevilsClient:
 
     @property
     def _session(self):
-        if hasattr(self, '_token'):
-            token = {'access_token': self._token }
-        else:
-            token = None
-        return OAuth2Session(self.client_id, token=token)
+        if getattr(self, '_session_obj', None) is None:
+            if hasattr(self, '_token'):
+                token = {'access_token': self._token }
+            else:
+                token = None
+            self._session_obj = OAuth2Session(self.client_id, token=token)
+        return self._session_obj
 
     def _build_url(self, path, **params):
         base = urljoin(self.base_url, path)
@@ -46,6 +48,7 @@ class WeevilsClient:
 
     def login(self, token):
         self._token = token
+        self._session_obj = None
 
     @requires_login
     def refresh_token(self, refresh_token, client_secret):
@@ -63,6 +66,8 @@ class WeevilsClient:
         return self._session.fetch_token(token_url, authorization_response=from_response, client_secret=client_secret)
 
     def _auth_get(self, path, **params):
+        print(params)
+        print(self._token)
         return self._session.get(self._build_url(path, **params)).json()
 
     def _auth_post(self, path, query_params=None, **post_data):

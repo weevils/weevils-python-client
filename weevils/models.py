@@ -18,7 +18,7 @@ class GitHostConnection(ApiModel):
 
 
 class WeevilUser(ApiModel):
-    properties = ('uuid')
+    properties = ('uuid',)
 
     def __init__(self, api_data):
         super().__init__(api_data)
