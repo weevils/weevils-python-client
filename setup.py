@@ -5,6 +5,7 @@ Client library for use with the weevils.io API
 from setuptools import find_packages, setup
 
 LONG_DESCRIPTION = open('README.md').read() + "\n" + open('CHANGELOG.md').read()
+VERSION = '0.0.1'
 
 setup(
     name='weevils',
@@ -12,7 +13,7 @@ setup(
     author_email='code@weevils.io',
     description='A client library for using the weevils.io API',
     long_description=LONG_DESCRIPTION,
-    version='0.0.1',
+    version=VERSION,
     packages=find_packages(),
     include_package_data=True,
     install_requires=['requests==2.21.0', 'requests-oauthlib==1.2.0'],
