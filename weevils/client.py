@@ -66,8 +66,6 @@ class WeevilsClient:
         return self._session.fetch_token(token_url, authorization_response=from_response, client_secret=client_secret)
 
     def _auth_get(self, path, **params):
-        print(params)
-        print(self._token)
         return self._session.get(self._build_url(path, **params)).json()
 
     def _auth_post(self, path, query_params=None, **post_data):

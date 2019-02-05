@@ -31,15 +31,17 @@ class WeevilUser(ApiModel):
 
 
 class Repository(ApiModel):
-    properties = ('uuid', 'repo_host', 'name', 'private', 'checked')
+    properties = ('uuid', 'name', 'private', 'checked')
 
     def __init__(self, api_data):
         super().__init__(api_data)
         self.owner = api_data['owner']['username']
+        self.host = api_data['repo_host']
 
     def as_dict(self):
         data = super().as_dict()
         data['owner'] = self.owner
+        data['host'] = self.host
         return data
 
 
