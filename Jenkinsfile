@@ -23,6 +23,9 @@ pipeline {
       }
     }
     stage('Upload') {
+      environment {
+        DEVPI_PASSWORD = credentials('devpi_password')
+      }
       steps {
         sh '''
         set -e
