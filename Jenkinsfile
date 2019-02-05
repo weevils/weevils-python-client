@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh('nosetests weevils/tests.py')
+        sh('_venv/bin/nosetests weevils/tests.py')
       }
     }
     stage('Upload') {
