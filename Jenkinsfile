@@ -27,7 +27,7 @@ pipeline {
         sh '''
         set -e
         _venv/bin/devpi use http://pypi.manage.redcliff.ltd
-        _venv/bin/devpi login privpkg --password="DEVPI_PASSWORD"
+        _venv/bin/devpi login privpkg --password="${DEVPI_PASSWORD}"
         _venv/bin/devpi use privpkg/privpkg
         rm -rf dist
         python setup.py sdist
