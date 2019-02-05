@@ -13,6 +13,7 @@ pipeline {
         set -e
         /opt/python37/bin/python3 -m venv _venv
         _venv/bin/pip install -e .[for_tests]
+        _venv/bin/pip install devpi
         '''
       }
     }
