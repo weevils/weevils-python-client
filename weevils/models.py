@@ -31,7 +31,7 @@ class WeevilUser(ApiModel):
 
 
 class Repository(ApiModel):
-    properties = ('uuid', 'name', 'private', 'checked')
+    properties = ('uuid', 'name', 'private', 'fork', 'checked')
 
     def __init__(self, api_data):
         super().__init__(api_data)
