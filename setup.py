@@ -4,13 +4,14 @@ Client library for use with the weevils.io API
 """
 from setuptools import find_packages, setup
 
-LONG_DESCRIPTION = open('README.md').read() + "\n" + open('CHANGELOG.md').read()
-VERSION = '0.0.3'
+LONG_DESCRIPTION = open('README.rst').read() + "\n" + open('CHANGELOG.md').read()
+VERSION = '0.0.4'
 
 setup(
     name='weevils',
     author='weevils.io',
     author_email='code@weevils.io',
+    url='https://weevils.io',
     description='A client library for using the weevils.io API',
     long_description=LONG_DESCRIPTION,
     version=VERSION,
