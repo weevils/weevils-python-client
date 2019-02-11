@@ -16,7 +16,7 @@ def requires_login(meth):
 
 class WeevilsClient:
 
-    def __init__(self, client_id, base_url='https://weevils.io'):
+    def __init__(self, client_id, base_url='https://api.weevils.io'):
         self.client_id = client_id
         self.base_url = base_url
 
