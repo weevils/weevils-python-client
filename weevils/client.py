@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 from urllib.parse import urljoin, urlencode
 from requests_oauthlib import OAuth2Session
-
-from .models import Check, Repository, WeevilUser
+from weevils.models import Check, Repository, WeevilUser
 
 
 class NotLoggedIn(Exception):
     def __init__(self, method_name):
-        return super().__init__(
+        super().__init__(
             "You must log in with a token before using the %s method" % method_name
         )
 
 
 def requires_login(meth):
     def ensure_token(instance, *args, **kwargs):
-        if getattr(instance, "_token", None) is None:
+        if instance._token is None:  # pylint: disable=protected-access
             raise NotLoggedIn(meth.__name__)
         return meth(instance, *args, **kwargs)
 
@@ -25,14 +24,13 @@ class WeevilsClient:
     def __init__(self, client_id, base_url="https://api.weevils.io"):
         self.client_id = client_id
         self.base_url = base_url
+        self._session_obj = None
+        self._token = None
 
     @property
     def _session(self):
-        if getattr(self, "_session_obj", None) is None:
-            if hasattr(self, "_token"):
-                token = {"access_token": self._token}
-            else:
-                token = None
+        if self._session_obj is None:
+            token = None if self._token is None else {"access_token": self._token}
             self._session_obj = OAuth2Session(self.client_id, token=token)
         return self._session_obj
 
