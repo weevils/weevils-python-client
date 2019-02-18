@@ -26,13 +26,10 @@ class TestClient(TestCase):
 
     def test_url_building(self):
         client = self._make_client()
-        self.assertEqual(
-            client._build_url("just/a/path"), "https://example.com/just/a/path"
-        )
-        self.assertEqual(
-            client._build_url("and/some/params", a=1, b="!"),
-            "https://example.com/and/some/params?a=1&b=%21",
-        )
+        self.assertEqual(client._build_url("just/a/path"), "https://example.com/just/a/path")
+        # py2 dict sorting non-determenistic so need to test both param possibilities
+        results = ("https://example.com/and/some/params?a=1&b=%21", "https://example.com/and/some/params?b=%21&a=1")
+        self.assertIn(client._build_url("and/some/params", a=1, b="!"), results)
 
     def test_login_required(self):
         token = _random_key(16)

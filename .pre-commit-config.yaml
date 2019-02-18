@@ -12,7 +12,8 @@ repos:
         - --exclude=*/migrations/*,docs/*
         - --ignore=E126
     -   id: check-added-large-files
--   repo: git://github.com/FalconSocial/pre-commit-python-sorter
-    rev: b57843b0b874df1d16eb0bef00b868792cb245c2
-    hooks:
-    -   id: python-import-sorter
+- repo: git://github.com/ambv/black
+  rev: 18.9b0
+  hooks:
+    - id: black
+      args: [--line-length=120, --safe]

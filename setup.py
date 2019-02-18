@@ -17,10 +17,10 @@ setup(
     version=VERSION,
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["requests==2.21.0", "requests-oauthlib==1.2.0"],
+    install_requires=["requests==2.21.0", "requests-oauthlib==1.2.0", "six==1.12.0"],
     extras_require={
         "for_tests": ["pytest==4.2.1", "betamax==0.8.1"],
-        "for_dev": ["pre-commit==1.14.3", "prospector==1.1.6.2"],
+        "for_dev": ["pre-commit==1.14.3", "prospector==1.1.6.2", "tox==3.7.0"],
     },
     license="MIT",
     classifiers=[
