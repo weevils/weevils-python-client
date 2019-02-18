@@ -36,8 +36,8 @@ class WeevilsClient:
             return base
         return '%s?%s' % (base, urlencode(params))
 
-    def get_login_github(self, with_state=False):
-        auth_url = self._build_url('oauth2/authorize', scope='basic github')
+    def get_login_github(self, private=False, with_state=False):
+        auth_url = self._build_url('oauth2/authorize', scope='basic github %s' % ('private' if private else 'public'))
         url, state = self._session.authorization_url(auth_url)
         return (url, state) if with_state else url
 

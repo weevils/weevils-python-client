@@ -10,7 +10,7 @@ install:
   - pip install tox-travis
   - pip install -e .[for_tests]
 script:
-  - nosetests
+  - pytest
 
 notifications:
   email:

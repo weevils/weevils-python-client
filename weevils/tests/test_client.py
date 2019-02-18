@@ -1,15 +1,21 @@
 from unittest import TestCase
-from .client import WeevilsClient, NotLoggedIn
+from ..client import WeevilsClient, NotLoggedIn
 from betamax import Betamax
 import os
+import random
+import string
 
 with Betamax.configure() as config:
-    config.cassette_library_dir = os.path.join(os.path.dirname(__file__), 'test_cassettes')
+    config.cassette_library_dir = os.path.join(os.path.dirname(__file__), 'cassettes')
+
+def _random_key(length):
+    charset = string.ascii_letters + string.digits
+    return ''.join([random.choice(charset) for _ in range(length)])
 
 class TestClient(TestCase):
 
     def _make_client(self):
-        return WeevilsClient('gckzkXH1jfttvCdasIksSr8pxHo3M9TMHsXRkmSv', base_url='https://example.com')
+        return WeevilsClient(_random_key(16), base_url='https://example.com')
 
     def setUp(self):
         os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -20,9 +26,9 @@ class TestClient(TestCase):
         self.assertEqual(client._build_url('and/some/params', a=1, b='!'), 'https://example.com/and/some/params?a=1&b=%21')
 
     def test_login_required(self):
-        token = 'VM9RQcUS6oKtD0We8cCKtsohGCUnxP'
-        refresh = '7dQWaxjHH3h8xoIWzVeCLRjPI8RfPd'
-        secret = 'cN1SCXPuj1wKWOMNnxINjE2u7E01YWtnEjSSAo3kmJuWSgyStu204gIA2YL7hX9NikIMyf6kCI8vJGG3QGulThn6R1nGRfH6Kj7qJGN8AfZfHojnNJ8KC9BmyVg7koP0'
+        token = _random_key(16)
+        refresh = _random_key(16)
+        secret = _random_key(32)
 
         client = self._make_client()
         with Betamax(client._session) as betamax:
