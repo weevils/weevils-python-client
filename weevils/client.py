@@ -89,7 +89,7 @@ class WeevilsClient:
         return [Repository(data) for data in self._auth_get("api/repos/", **params)]
 
     @requires_login
-    def repository_from_id(self, repository_id):
+    def repository(self, repository_id):
         return Repository(self._auth_get("api/repo/%s" % repository_id))
 
     @requires_login

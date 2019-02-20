@@ -4,7 +4,7 @@ Client library for use with the weevils.io API
 """
 from setuptools import find_packages, setup
 
-LONG_DESCRIPTION = open("README.rst").read() + "\n" + open("CHANGELOG.md").read()
+LONG_DESCRIPTION = open("README.rst").read() + "\n" + open("CHANGELOG.rst").read()
 VERSION = "0.0.4"
 
 setup(
